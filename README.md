@@ -1,7 +1,6 @@
 # House Price Prediction
 
-A machine learning project that predicts house prices using structured housing data.  
-This repository is implemented in **Jupyter Notebook** and demonstrates a full predictive modeling workflow: data loading, preprocessing, exploratory data analysis (EDA), feature engineering, model training, evaluation, and inference.
+A machine learning project that predicts residential property prices using structured housing data. The full workflow—data cleaning, exploratory analysis, feature engineering, model training, evaluation, and visual reporting—is implemented in a single Jupyter Notebook.
 
 ---
 
@@ -16,116 +15,108 @@ This repository is implemented in **Jupyter Notebook** and demonstrates a full p
 - [Dataset](#dataset)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Modeling Approach](#modeling-approach)
 - [Evaluation Metrics](#evaluation-metrics)
 - [Results](#results)
-- [How to Improve This Project](#how-to-improve-this-project)
-- [Reproducibility](#reproducibility)
-- [Troubleshooting](#troubleshooting)
+- [Key Insights](#key-insights)
 - [Future Work](#future-work)
-- [Contributing](#contributing)
-- [License](#license)
 - [Author](#author)
 
 ---
 
 ## Project Overview
 
-This project builds a supervised regression model to estimate house prices from property-related features (e.g., size, location factors, number of rooms, and other structured attributes).
+This project builds a supervised regression pipeline to estimate house prices from structural features such as area, bathrooms, bedrooms, stories, parking, and amenities (e.g., air conditioning, guest room, basement).
 
-The notebook-based implementation is intended to be:
-- easy to follow,
-- educational for beginners/intermediate ML practitioners,
-- extensible for experimentation with multiple regression algorithms.
+Two models are benchmarked:
+
+- **Linear Regression** (baseline)
+- **Random Forest Regressor** (ensemble)
+
+The goal is to compare performance and identify the model that generalizes best on this compact real-estate dataset.
 
 ---
 
 ## Problem Statement
 
-Accurately estimating residential property prices is a common real-world problem in real estate and finance. Manual valuation can be time-consuming and inconsistent. This project uses historical housing data to train a machine learning model that predicts house prices from input features.
+Residential property valuation is often subjective and inconsistent. This project addresses that by using data preprocessing and regression models to estimate prices using objective property attributes.
 
 ---
 
 ## Objectives
 
-- Perform initial data inspection and cleaning.
-- Conduct exploratory data analysis to identify key patterns.
-- Preprocess features (missing values, encoding, scaling where needed).
-- Train and compare regression models.
-- Evaluate model performance using standard regression metrics.
-- Generate predictions for unseen data.
+- Clean and validate raw housing data (missing values, duplicates)
+- Encode categorical variables for model compatibility
+- Split data into train/test sets (80/20)
+- Train and compare multiple regression models
+- Evaluate model performance with standard regression metrics
+- Visualize feature relationships and prediction behavior
 
 ---
 
 ## Repository Structure
 
-> Update these paths/names if your files differ.
-
 ```text
 house-price-prediction/
 │
-├── *.ipynb                 # Main notebook(s): EDA, preprocessing, training, evaluation
-├── data/                   # (Optional) dataset files
-├── outputs/                # (Optional) plots, reports, prediction files
-└── README.md               # Project documentation
+├── .gitignore
+├── README.md
+├── analysis.ipynb
+├── Housing.csv
+├── summary.pdf
+└── charts/
+    ├── actual_vs_predicted.png
+    ├── correlation_heatmap.png
+    └── price_distribution.png
 ```
-
-If your repository currently has a single notebook, consider renaming it to something descriptive, e.g.:
-- `house_price_prediction.ipynb`
-- `model_training.ipynb`
 
 ---
 
 ## Tech Stack
 
-- **Language:** Python (via Jupyter Notebook)
-- **Core Libraries (typical):**
-  - `pandas` for data manipulation
-  - `numpy` for numerical operations
-  - `matplotlib` / `seaborn` for visualization
-  - `scikit-learn` for preprocessing, modeling, and evaluation
+- **Language:** Python 3.x (Jupyter Notebook)
+- **Data Analysis:** pandas, numpy
+- **Machine Learning:** scikit-learn
+- **Visualization:** matplotlib, seaborn
 
 ---
 
 ## Workflow
 
-1. **Data Loading**
-   - Import dataset from CSV/Excel or another source.
+1. **Data Loading & Exploration**
+   - Import `Housing.csv`
+   - Inspect dataset shape, data types, and summary statistics
+
 2. **Data Cleaning**
-   - Handle nulls, duplicates, outliers, and datatype inconsistencies.
-3. **Exploratory Data Analysis (EDA)**
-   - Visualize distributions, correlations, and feature-target relationships.
-4. **Feature Engineering**
-   - Encode categorical variables and transform numerical features.
-5. **Train-Test Split**
-   - Separate data into training and validation/test sets.
-6. **Model Training**
-   - Train one or more regression algorithms.
-7. **Evaluation**
-   - Compare models using MAE, RMSE, R², etc.
-8. **Prediction**
-   - Run inference on unseen samples.
+   - Check missing values
+   - Remove duplicates
+
+3. **Preprocessing**
+   - One-hot encode categorical features
+   - Prepare features (`X`) and target (`y`)
+
+4. **Train-Test Split**
+   - 80/20 split with fixed `random_state`
+
+5. **Model Training**
+   - Train Linear Regression
+   - Train Random Forest Regressor
+
+6. **Evaluation & Visualization**
+   - Compute MAE, RMSE, and R²
+   - Generate plots for distribution, correlations, and predictions
 
 ---
 
 ## Dataset
 
-Describe your dataset here. Suggested template:
+- **Source:** Kaggle Housing Prices Dataset
+- **Rows:** 545
+- **Columns:** 13
+- **Target Variable:** `price`
 
-- **Source:** *(Kaggle / local dataset / public dataset link)*
-- **Rows:** `N`
-- **Columns:** `M`
-- **Target Variable:** `SalePrice` *(or your actual target column)*
-- **Feature Types:**
-  - Numerical features
-  - Categorical features
-- **Potential Issues:**
-  - Missing values
-  - Skewed distributions
-  - Outliers
+### Key Input Features
 
-> If this is the Kaggle House Prices dataset, include a link:
-> https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques
+`area`, `bedrooms`, `bathrooms`, `stories`, `mainroad`, `guestroom`, `basement`, `hotwaterheating`, `airconditioning`, `parking`, `prefarea`, `furnishingstatus`
 
 ---
 
@@ -138,15 +129,17 @@ git clone https://github.com/ishanpote/house-price-prediction.git
 cd house-price-prediction
 ```
 
-### 2) Create and activate a virtual environment (recommended)
+### 2) Create and activate a virtual environment
 
 **Windows (PowerShell):**
+
 ```bash
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
 **macOS/Linux:**
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -154,12 +147,6 @@ source .venv/bin/activate
 
 ### 3) Install dependencies
 
-If you have a `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
-
-If not, install common packages manually:
 ```bash
 pip install jupyter pandas numpy matplotlib seaborn scikit-learn
 ```
@@ -170,139 +157,67 @@ pip install jupyter pandas numpy matplotlib seaborn scikit-learn
 jupyter notebook
 ```
 
-Open the main `.ipynb` file and run cells in order.
+Open `analysis.ipynb` and run all cells in sequence.
 
 ---
 
 ## Usage
 
-- Open the notebook.
-- Run all preprocessing and training cells.
-- Review metric outputs and visualizations.
-- Modify hyperparameters and retrain to compare performance.
-- Save predictions (if implemented) to CSV.
+The complete pipeline is contained in `analysis.ipynb`. Running the notebook performs preprocessing, model training, evaluation, and chart generation.
 
-Example prediction flow (pseudo-steps):
-1. Load trained model or train a fresh model.
-2. Prepare input features with the same preprocessing pipeline.
-3. Call `model.predict(X_new)`.
-4. Store/visualize results.
-
----
-
-## Modeling Approach
-
-This project can include one or more of the following regression models:
-
-- Linear Regression
-- Ridge / Lasso Regression
-- Decision Tree Regressor
-- Random Forest Regressor
-- Gradient Boosting / XGBoost (if used)
-
-Recommended best practice:
-- Use a **Pipeline** for preprocessing + modeling.
-- Use **cross-validation** to reduce overfitting risk.
-- Perform **hyperparameter tuning** (`GridSearchCV` / `RandomizedSearchCV`).
+Generated plots are saved in the `charts/` directory.
 
 ---
 
 ## Evaluation Metrics
 
-Typical regression metrics used:
+The models are evaluated using:
 
-- **MAE (Mean Absolute Error):** average absolute prediction error.
-- **MSE (Mean Squared Error):** average squared error.
-- **RMSE (Root Mean Squared Error):** error in original target units.
-- **R² Score:** variance explained by the model.
-
-Interpretation guideline:
-- Lower MAE/RMSE is better.
-- Higher R² (closer to 1.0) is better.
+- **MAE (Mean Absolute Error):** Average absolute prediction error
+- **RMSE (Root Mean Squared Error):** Penalizes larger errors more strongly
+- **R² Score (Coefficient of Determination):** Proportion of variance explained
 
 ---
 
 ## Results
 
-Add your actual model results here. Example format:
+Train-test split:
 
-| Model                  | MAE   | RMSE  | R²    |
-|-----------------------|-------|-------|-------|
-| Linear Regression     | 0.00  | 0.00  | 0.00  |
-| Random Forest         | 0.00  | 0.00  | 0.00  |
-| Best Model (example)  | 0.00  | 0.00  | 0.00  |
+- **Training set:** `(436, 13)`
+- **Test set:** `(109, 13)`
 
-> Replace with real scores from your notebook.
+| Metric | Linear Regression | Random Forest Regressor |
+|---|---:|---:|
+| MAE | 970,043.40 | 1,021,546.04 |
+| RMSE | 1,324,506.96 | 1,400,565.97 |
+| R² Score | **0.6529** | 0.6119 |
 
----
+### Conclusion
 
-## How to Improve This Project
-
-- Add feature importance plots.
-- Add residual error diagnostics.
-- Add model explainability (SHAP/LIME).
-- Add robust outlier handling.
-- Add experiment tracking (MLflow/W&B).
-- Export trained model using `joblib`/`pickle`.
-- Build a simple API (FastAPI/Flask) for serving predictions.
+Linear Regression performs better on this dataset and provides stronger generalization compared with Random Forest in the current configuration.
 
 ---
 
-## Reproducibility
+## Key Insights
 
-To make this project reproducible:
-- Set random seeds (`random_state`) consistently.
-- Pin package versions in `requirements.txt`.
-- Keep dataset version fixed.
-- Save preprocessing and model artifacts.
+- **Strongest drivers of price:**
+  - `area` (correlation ≈ 0.54)
+  - `bathrooms` (correlation ≈ 0.52)
+- **Bedrooms vs amenities:** Bedrooms show weaker correlation (~0.37) than amenities such as air conditioning (~0.45).
+- **Distribution behavior:** Price is right-skewed, with most homes concentrated between approximately 3,000,000 and 5,500,000, and a smaller luxury tail beyond 12,000,000.
 
----
+### Practical Recommendation
 
-## Troubleshooting
-
-- **Notebook won’t run:** ensure virtual environment is active and dependencies are installed.
-- **ModuleNotFoundError:** install missing package via `pip install <package_name>`.
-- **Inconsistent results:** verify `random_state` and dataset version.
-- **Encoding errors:** confirm categorical preprocessing is applied identically in training and inference.
+For renovation or investment strategy, prioritize improvements that increase utility and perceived quality (bathroom upgrades, open layouts, climate-control amenities) over simply adding low-value room partitions.
 
 ---
 
 ## Future Work
 
-- Add advanced ensembling/stacking.
-- Try target transformation (`log1p`) for skewed price distributions.
-- Add geospatial features if location data is available.
-- Create an interactive dashboard (Streamlit/Gradio).
-- Add CI checks for notebook linting/testing.
-
----
-
-## Contributing
-
-Contributions are welcome.
-
-1. Fork this repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature/my-improvement
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add: improved preprocessing pipeline"
-   ```
-4. Push branch and open a Pull Request.
-
----
-
-## License
-
-Specify your license here (e.g., MIT):
-
-```text
-MIT License
-```
-
-If you haven’t added one yet, create a `LICENSE` file in the root.
+- Apply target transformation (e.g., `log1p(price)`) to reduce skewness
+- Evaluate regularized linear models (Ridge/Lasso)
+- Tune Random Forest hyperparameters via cross-validation
+- Add a lightweight deployment interface (Streamlit/Gradio)
 
 ---
 
@@ -310,11 +225,3 @@ If you haven’t added one yet, create a `LICENSE` file in the root.
 
 **Ishan Pote**  
 GitHub: [@ishanpote](https://github.com/ishanpote)
-
----
-
-## Acknowledgements
-
-- Scikit-learn documentation
-- Jupyter Notebook ecosystem
-- Open datasets / Kaggle community
